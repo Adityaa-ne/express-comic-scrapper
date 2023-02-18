@@ -4,6 +4,7 @@ const cors = require('cors');
 const getMangaList = require('./Model/MangatoonMobi/GetList');
 const getGenreList = require('./Model/MangatoonMobi/GetGenre');
 const getDetailManga = require('./Model/MangatoonMobi/GetDetail');
+const getReadManga = require('./Model/MangatoonMobi/GetRead');
 /* End module list */
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,6 +51,24 @@ app.get('/api/detail/:title', async (req, res) => {
     });
   } catch (error) {
     console.error('error');
+  }
+});
+app.get('/api/read/:lang/:type/:id/:c_id', async (req, res) => {
+  const { params } = req;
+  try {
+    const data = await getReadManga(
+      params.lang,
+      params.type,
+      params.id,
+      params.c_id
+    );
+    res.send({
+      success: true,
+      status: 200,
+      data: data,
+    });
+  } catch (error) {
+    res.send('error');
   }
 });
 /* Log app */
