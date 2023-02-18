@@ -1,9 +1,11 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-async function getComicList(num) {
+async function getComicList(num, genre) {
   const current = num ?? 0;
-  let URL = `https://mangatoon.mobi/id/genre/novel?page=${current}`;
+  let URL = genre
+    ? `https://mangatoon.mobi/${genre}?page=${current}`
+    : `https://mangatoon.mobi/id/genre/novel?page=${current}`;
   let list = [];
   try {
     const { data } = await axios.get(URL);
